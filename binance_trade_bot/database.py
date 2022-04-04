@@ -105,6 +105,17 @@ class Database:
             session.add(cc)
             self.send_update(cc)
 
+    def update_last_owned_amount(self, coin: Union[Coin, str], balance: float):
+        coin = self.get_coin(coin)
+        session: Session
+        with self.db_session() as session:
+            if isinstance(coin, Coin):
+                coin = session.merge(coin)
+            cc = Coin(coin)
+            cc.lastOwnedQty = balance
+            session.add(cc)
+            self.send_update(cc)
+
     def get_current_coin(self) -> Optional[Coin]:
         session: Session
         with self.db_session() as session:

@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, String
+from sqlalchemy import Boolean, Column, String, Float
 
 from .base import Base
 
@@ -7,10 +7,12 @@ class Coin(Base):
     __tablename__ = "coins"
     symbol = Column(String, primary_key=True)
     enabled = Column(Boolean)
+    lastOwnedQty = Column(Float)
 
-    def __init__(self, symbol, enabled=True):
+    def __init__(self, symbol, enabled=True, last_owned_qty=None):
         self.symbol = symbol
         self.enabled = enabled
+        self.lastOwnedQty = last_owned_qty
 
     def __add__(self, other):
         if isinstance(other, str):
